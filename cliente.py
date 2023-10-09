@@ -1,88 +1,20 @@
-<<<<<<< HEAD
 
-import csv
+#cadastrar cliente
+#funçao para ler arquivo
+#funçao para editar
+#funçao para deletar
+def deletar_cliente(clientes, email): #foi criado a funçao de deletar
+    cliente_encontrado = None  #none significa que se nao exister o cadastro, ele identifica e avisa que nao existe
+    for cliente in clientes:
+        if cliente['email'] == email:#a busca foi feita pelo email , porque por nome pode ter repetido
+            cliente_encontrado = cliente 
+            break
 
-def deletar_cliente(arquivo_csv, id_cliente):
-    nova_lista_clientes = []
+    if cliente_encontrado:
+        clientes.remove(cliente_encontrado) #se encontrado o cliente, ativa a funçao remover
+        print(f"Cliente com o email {email} foi deletado com sucesso.")
 
-    
-    with open(arquivo_csv, mode='r', newline='') as file:
-        reader = csv.DictReader(file)
-
-        
-        for linha in reader:
-            
-            if linha['ID'] == id_cliente:
-                continue  
-            nova_lista_clientes.append(linha)  
-
-    
-    with open(arquivo_csv, mode='w', newline='') as file:
-        
-        campos = ['ID', 'Nome', 'Email', 'Telefone']
-
-        
-        writer = csv.DictWriter(file, fieldnames=campos)
-
-        
-        writer.writeheader()
-
-       
-        for linha in nova_lista_clientes:
-            writer.writerow(linha)
-
-    print(f"Cliente com ID {id_cliente} foi excluído com sucesso.")
-
-
-arquivo_csv = 'clientes.csv'
-id_cliente_a_deletar = '123' 
-deletar_cliente(arquivo_csv, id_cliente_a_deletar)
-
-
-
-
-
-=======
-import csv
-def cadastrar_cliente(clientes, nome , email, telefone):
-    cliente ={
-        'Nome': nome,
-        'Email':email,
-        'Telefone': telefone
-    }
-    clientes.append(cliente)
-    print("suscesso!")
-clientes=[] 
-def criar_arquivo_csv():
-    with open('arquivo.csv', mode="w", newline="") as arquivo_csv:
-        writer=csv.writer(arquivo_csv) #criar um novo arquivo
-        writer.writerow(["Nome","Email","Telefone"])
-    
-        for clientee in clientes: #para navegar no dicionário
-             writer.writerow([clientee["Nome"], clientee["Email"], clientee["Telefone"]])
-             print("salvo!")
-
-def ler_dados_csv():
-    with open('arquivo.csv', mode='r') as arquivo_csv:
-        leitor_csv = csv.DictReader(arquivo_csv)
-        for linha in leitor_csv:
-            print(f"Nome:{linha['Nome']}, Email: {linha['Email']}, Telefone:{linha['Telefone']}")
-
-
-
-while True:
-    print("MENU\n"
-        "1. cadastrar \n"
-        "2. imprimir\n"
-        "3. salvar\n")
-    opcao=int(input("escolha uma opção"))
-
-    if opcao == 1:
-        nome = input("nome do cliente: ")
-        email = input("Email do cliente: ")
-        telefone = input("telefone do cliente: ")
-        cadastrar_cliente(clientes,nome,email,telefone)
-        criar_arquivo_csv()
-    elif opcao == 2:
-        ler_dados_csv()
->>>>>>> a7615cd5cefb0eb78d24152765100d7adbd30334
+        # Atualize o arquivo CSV após a remoção
+        gravar(clientes) 
+    else:
+        print(f"Cliente com o email {email} não encontrado.")
