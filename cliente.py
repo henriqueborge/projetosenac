@@ -60,7 +60,7 @@ def criar_arquivo_csv():
     
         for clientee in clientes: #para navegar no dicionário
              writer.writerow([clientee["Nome"], clientee["Email"], clientee["Telefone"]])
-             break
+            
 
 def ler_dados_csv():
     with open('arquivo.csv', mode='r') as arquivo_csv:
