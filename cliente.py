@@ -43,8 +43,8 @@ deletar_cliente(arquivo_csv, id_cliente_a_deletar)
 
 
 =======
-import csv
-def cadastrar_cliente(clientes, nome , email, telefone):
+#cadastrar cliente
+def cadastrar_cliente(clientes, nome , email, telefone):#
     cliente ={
         'Nome': nome,
         'Email':email,
@@ -56,11 +56,10 @@ clientes=[]
 def criar_arquivo_csv():
     with open('arquivo.csv', mode="w", newline="") as arquivo_csv:
         writer=csv.writer(arquivo_csv) #criar um novo arquivo
-        writer.writerow(["Nome","Email","Telefone"])
+        writer.writerow(["Nome","Email","Telefone"]) # escrever o cabeçalho
     
         for clientee in clientes: #para navegar no dicionário
-             writer.writerow([clientee["Nome"], clientee["Email"], clientee["Telefone"]])
-            
+             writer.writerow([clientee["Nome"], clientee["Email"], clientee["Telefone"]]) #escrever varias linhas
 
 def ler_dados_csv():
     with open('arquivo.csv', mode='r') as arquivo_csv:
@@ -83,4 +82,7 @@ while True:
         criar_arquivo_csv()
     elif opcao == 2:
         ler_dados_csv()
+#funçao para ler arquivo
+#funçao para editar
+#funçao para deletar
 >>>>>>> a7615cd5cefb0eb78d24152765100d7adbd30334
