@@ -115,8 +115,10 @@ while True:
                 print("Opção inválida")
                 
     elif opcao == 4:
+        email = input("Digite o email do cliente que deseja deletar: ")
+        deletar_cliente(clientes, email)
+        criar_arquivo_csv(clientes)
         
-        deletar_cliente()
         
     elif opcao == 5:
         print("saindo")
