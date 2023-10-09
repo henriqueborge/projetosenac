@@ -14,8 +14,8 @@ def criar_arquivo_csv():
         writer=csv.writer(arquivo_csv) #criar um novo arquivo
         writer.writerow(["Nome","Email","Telefone"])
     
-        for clientee in clientes: #para navegar no dicionário
-             writer.writerow([clientee["Nome"], clientee["Email"], clientee["Telefone"]])
+        for cliente in clientes: #para navegar no dicionário
+             writer.writerow([cliente["Nome"], cliente["Email"], cliente["Telefone"]])
 #função para ler arquivo
 def ler_dados_csv():
     with open('arquivo.csv', mode='r') as arquivo_csv:
@@ -81,14 +81,8 @@ while True:
         email=input("digite email: ")
         telefone=input("digite telefone: ")
         cadastrar_cliente(clientes, nome, email, telefone)
-        with open('arquivo.csv', mode="w", newline="") as arquivo_csv:
-    
-            writer = csv.writer(arquivo_csv)
-    
-            writer.writerow(["nome", "email", "telefone",])
-    
-            for cliente in clientes:
-                writer.writerow([cliente["Nome"], cliente["Email"], cliente["Telefone"]])
+        criar_arquivo_csv()
+        
     elif opcao == 2:
         ler_dados_csv()
         
@@ -103,11 +97,11 @@ while True:
             if opcao_atualizacao == 1:
                 nome_cliente = input("Digite o nome do cliente que deseja editar: ")
             for i, cliente in enumerate(clientes):
-                if cliente["nome"] == nome_cliente:
+                if cliente["Nome"] == nome_cliente:
                     novo_nome = input("Novo nome: ")
                     novo_email = input("Novo email: ")
                     novo_telefone = input("Novo telefone: ")
-                    novos_valores = {'nome': novo_nome, 'email': novo_email, 'telefone': novo_telefone}
+                    novos_valores = {'Nome': novo_nome, 'Email': novo_email, 'Telefone': novo_telefone}
                     editar_linha_csv('arquivo.csv', i + 1, [novo_nome, novo_email, novo_telefone])
                     clientes[i] = novos_valores
                     print("Dados do cliente atualizados com sucesso.")
@@ -121,6 +115,7 @@ while True:
                 print("Opção inválida")
                 
     elif opcao == 4:
+        
         deletar_cliente()
         
     elif opcao == 5:
