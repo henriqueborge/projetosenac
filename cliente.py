@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 import csv
 
@@ -38,11 +37,6 @@ arquivo_csv = 'clientes.csv'
 id_cliente_a_deletar = '123' 
 deletar_cliente(arquivo_csv, id_cliente_a_deletar)
 
-
-
-
-
-=======
 import csv
 def cadastrar_cliente(clientes, nome , email, telefone):
     cliente ={
@@ -83,4 +77,33 @@ while True:
         criar_arquivo_csv()
     elif opcao == 2:
         ler_dados_csv()
->>>>>>> a7615cd5cefb0eb78d24152765100d7adbd30334
+#função cadastrar
+#função para ler arquivo
+#função para editar arquivo
+def editar_linha_csv(arquivo, linha, novos_dados):
+    with open(arquivo, mode='r') as arquivo_csv:
+        leitor_csv = csv.reader(arquivo_csv)
+        linhas = list(leitor_csv)
+
+    linhas[linha] = novos_dados
+
+    with open(arquivo, mode='w', newline='') as arquivo_csv:
+        escritor_csv = csv.writer(arquivo_csv)
+        for linha in linhas:
+            escritor_csv.writerow(linha)
+
+def atualizar_cliente(clientes, nome_cliente):
+    for i, cliente in enumerate(clientes):
+        if cliente["nome"] == nome_cliente:
+            novo_nome = input("Novo nome: ")
+            novo_email = input("Novo email: ")
+            novo_telefone = input("Novo telefone: ")
+            novos_valores = {'nome': novo_nome, 'email': novo_email, 'telefone': novo_telefone}
+            clientes[i] = novos_valores
+            editar_linha_csv('arquivo.csv', i + 1, [novo_nome, novo_email, novo_telefone])
+            print("Dados do cliente atualizados com sucesso.")
+            break
+    else:
+        print(f"Cliente com nome '{nome_cliente}' não encontrado.")
+#função deletar arquivo
+
