@@ -49,48 +49,30 @@ def atualizar_cliente(clientes, nome_cliente):
         else:
             print(f"Cliente com nome '{nome_cliente}' não encontrado.")
 #função deletar arquivo
-def deletar_cliente(arquivo_csv, id_cliente):
-    nova_lista_clientes = []
 
-    
-    with open(arquivo_csv, mode='r', newline='') as file:
-        reader = csv.DictReader(file)
+def deletar_cliente(clientes, email): #foi criado a funçao de deletar
+    cliente_encontrado = None  #none significa que se nao exister o cadastro, ele identifica e avisa que nao existe
+    for cliente in clientes:
+        if cliente['Email'] == email:#a busca foi feita pelo email , porque por nome pode ter repetido
+            cliente_encontrado = cliente 
+            break
 
+    if cliente_encontrado:
+        clientes.remove(cliente_encontrado) #se encontrado o cliente, ativa a funçao remover
+        print(f"Cliente com o email {email} foi deletado com sucesso.")
+
+        # Atualize o arquivo CSV após a remoção
+        criar_arquivo_csv(clientes) 
+    else:
+        print(f"Cliente com o email {email} não encontrado.")
         
-        for linha in reader:
-            
-            if linha['ID'] == id_cliente:
-                continue  
-            nova_lista_clientes.append(linha)  
-
-    
-    with open(arquivo_csv, mode='w', newline='') as file:
-        
-        campos = ['ID', 'Nome', 'Email', 'Telefone']
-
-        
-        writer = csv.DictWriter(file, fieldnames=campos)
-
-        
-        writer.writeheader()
-
-       
-        for linha in nova_lista_clientes:
-            writer.writerow(linha)
-
-    print(f"Cliente com ID {id_cliente} foi excluído com sucesso.")
-
-
-arquivo_csv = 'clientes.csv'
-id_cliente_a_deletar = '123' 
-deletar_cliente(arquivo_csv, id_cliente_a_deletar)
-
 while True:
     print(" Menu\n")
     print("1. cadastrar cliente")
     print("2. ler dados do cliente")
     print("3. atualizar dados")
-    print("4. sair")
+    print("4. deletar cliente")
+    print("5. sair")
     
     opcao = int(input("escolha uma opção: "))
     
@@ -106,9 +88,10 @@ while True:
             writer.writerow(["nome", "email", "telefone",])
     
             for cliente in clientes:
-                writer.writerow([cliente["nome"], cliente["email"], cliente["telefone"]])
+                writer.writerow([cliente["Nome"], cliente["Email"], cliente["Telefone"]])
     elif opcao == 2:
         ler_dados_csv()
+        
     elif opcao == 3:
         print(" Menu de Atualização\n")
         print("1. Editar dados de um cliente")
@@ -134,8 +117,13 @@ while True:
         elif opcao_atualizacao == 2:
             continue
         else:
-            print("Opção inválida")
+       
+                print("Opção inválida")
+                
     elif opcao == 4:
+        deletar_cliente()
+        
+    elif opcao == 5:
         print("saindo")
         break
     else:
